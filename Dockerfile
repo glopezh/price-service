@@ -15,7 +15,7 @@ RUN mvn dependency:go-offline
 COPY src ./src
 
 # Limpiar antes de compilar y compilar
-RUN mvn clean compile test package install
+RUN mvn clean package install
 
 # Fase de ejecución: utiliza una imagen de OpenJDK para ejecutar la aplicación
 FROM openjdk:11-jre-slim
