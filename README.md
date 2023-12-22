@@ -20,3 +20,29 @@ Para ejecutar la imagen docker java-maven
 ```
 docker run -p 8080:8080 java-maven 
 ```
+### Estructura del proyecto
+
+src
+└── main
+├── java
+│   └── com
+│       └── example
+│           └── priceservice
+│               ├── application
+│               │   └── PriceQueryService.java
+│               ├── domain
+│               │   └── Price.java
+│               ├── infrastructure
+│               │   ├── adapter
+│               │   │   └── persistence
+│               │   │       ├── PriceEntity.java
+│               │   │       ├── PriceRepositoryJpa.java
+│               │   │       └── PriceRepositoryJpaAdapter.java
+│               │   └── config
+│               │       └── H2Config.java
+│               ├── presentation
+│               │   └── PriceController.java
+│               └── PriceServiceApplication.java
+└── resources
+├── application.properties
+└── data.sql
