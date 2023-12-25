@@ -18,3 +18,12 @@ Para ejecutar la imagen docker java-maven
 docker run -p 8080:8080 java-maven 
 ```
 ### Estructura del proyecto
+La estructura se basa en la arquitectura hexagonal.
+![Estructura](images/estructura.png)
+
+### Prueba en el postman
+![Postman](images/postman.png)
+### Prueba de que los test funcionan
+![tests](images/tests.png)
+
+
