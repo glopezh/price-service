@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +32,10 @@ public class PriceController {
             @RequestParam("productId") Long productId,
             @RequestParam("brandId") Long brandId) {
         List<Price> ListPrices = priceService.findPrices(startDate, productId, brandId);
+
+        if (startDate == null || startDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha de inicio no es válida");
+        }
 
         List<Map<String, Object>> result = new ArrayList<>();
 
