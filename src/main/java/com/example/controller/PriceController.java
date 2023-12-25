@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PriceController {
@@ -23,11 +26,25 @@ public class PriceController {
     }
 
     @GetMapping("/getPrices")
-    public List<Price> findPrices(
+    public List<Map<String, Object>> findPrices(
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate startDate,
             @RequestParam("productId") Long productId,
             @RequestParam("brandId") Long brandId) {
-        return priceService.findPrices(startDate, productId, brandId);
+        List<Price> ListPrices = priceService.findPrices(startDate, productId, brandId);
+
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        for (Price price : ListPrices) {
+            Map<String, Object> priceInfo = new HashMap<>();
+            priceInfo.put("productId",price.getProductId());
+            priceInfo.put("brandId",price.getBrandId());
+            priceInfo.put("priceList",price.getPriceList());
+            priceInfo.put("endDate",price.getEndDate());
+            priceInfo.put("startDate", price.getStartDate());
+            priceInfo.put("price", price.getPrice());
+            result.add(priceInfo);
+        }
+        return result;
     }
 
     @GetMapping("/all")
