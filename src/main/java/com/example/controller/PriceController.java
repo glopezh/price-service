@@ -33,7 +33,6 @@ public class PriceController {
     public ResponseEntity<List<Price>> getAllPrices() {
         List<Price> allPrices = priceService.getAllPrices();
 
-        // You can customize the response based on the prices or return additional information.
         return new ResponseEntity<>(allPrices, HttpStatus.OK);
     }
 }
