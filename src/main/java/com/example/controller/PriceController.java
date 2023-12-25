@@ -27,7 +27,7 @@ public class PriceController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate startDate,
             @RequestParam("productId") Long productId,
             @RequestParam("brandId") Long brandId) {
-        return priceService.findPrices(startDate, brandId, productId);
+        return priceService.findPrices(startDate, productId, brandId);
     }
 
     @GetMapping("/all")
