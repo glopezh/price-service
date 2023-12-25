@@ -10,22 +10,17 @@ public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "brand_id")
     private Long brandId;
-    @Column(name = "start_date")
     private LocalDate startDate;
-    @Column(name = "end_date")
     private LocalDate endDate;
-    @Column(name = "price_list")
     private Long priceList;
-    @Column(name = "product_id")
     private Long productId;
-    @Column(name = "priority")
     private Integer priority;
-    @Column(name = "price")
     private Double price;
-    @Column(name = "currency")
     private String currency;
+
+    public Price() {
+    }
 
     public Long getId() {
         return id;
@@ -34,6 +29,7 @@ public class Price {
     public void setId(Long id) {
         this.id = id;
     }
+
     public Long getBrandId() {
         return brandId;
     }
@@ -97,6 +93,17 @@ public class Price {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+    public Price(Long id, Long brandId, LocalDate startDate, LocalDate endDate, Long priceList, Long productId, Integer priority, Double price, String currency) {
+        this.id = id;
+        this.brandId = brandId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.priceList = priceList;
+        this.productId = productId;
+        this.priority = priority;
+        this.price = price;
+        this.currency = currency;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -110,5 +117,4 @@ public class Price {
     public int hashCode() {
         return Objects.hash(getId(), getBrandId(), getStartDate(), getEndDate(), getPriceList(), getProductId(), getPriority(), getPrice(), getCurrency());
     }
-
 }
