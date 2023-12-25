@@ -13,18 +13,15 @@ public class PriceServiceApplicationTest {
      */
     @Test
     public void applicationContextLoads() {
-        // You can add more assertions or test conditions here
+
         assertTrue(true, "The application context should load successfully.");
     }
-
-    // You can add more test methods as needed for different scenarios.
 
     /**
      * Example test for a specific feature or component.
      */
     @Test
     public void testSomeFeature() {
-        // Example assertion for a specific feature
         assertEquals(2, 1 + 1, "1 + 1 should equal 2");
     }
 }

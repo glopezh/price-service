@@ -4,7 +4,6 @@ import com.example.application.PriceService;
 import com.example.domain.Price;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -15,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -32,25 +32,23 @@ public class PriceControllerTest {
 
     @BeforeEach
     public void setUp() {
-        // Puedes inicializar o realizar configuraciones aquí si es necesario
     }
 
     @Test
     public void testFindPrices() throws Exception {
-        // Implementación del método de prueba
+
         LocalDate startDate = LocalDate.parse("2020-06-14");
         Long productId = 1L;
         Long brandId = 1L;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss");
-        Price price1 = new Price(1L, 1L, LocalDate.parse("2020-06-14-23.59.59", formatter), LocalDate.parse("2020-12-31-23.59.59", formatter), 1L, 35455L, 0, 35.50, "EUR");
-        Price price2 = new Price(2L, 1L, LocalDate.parse("2020-06-14-18.30.00", formatter), LocalDate.parse("2020-12-31-23.59.59", formatter), 2L, 35455L, 1, 25.45, "EUR");
-        List<Price> mockPrices = Arrays.asList(price1, price2);
+        Price price1 = new Price(1L, 1L, LocalDate.parse("2020-06-14-10.00.00", formatter), LocalDate.parse("2020-12-31-23.59.59", formatter), 1L, 35455L, 0, 35.50, "EUR");
+        Price price2 = new Price(2L, 1L, LocalDate.parse("2020-06-14-16.00.00", formatter), LocalDate.parse("2020-12-31-23.59.59", formatter), 2L, 35455L, 1, 25.45, "EUR");
+        List<Price> mockPrices = getPrices(formatter, price1, price2);
 
-        // Mock del servicio para devolver datos simulados
+
         when(priceService.findPrices(startDate, productId, brandId)).thenReturn(mockPrices);
 
-        // Ejecuta la solicitud simulada y verifica los resultados
         mockMvc.perform(get("/getPrices")
                         .param("startDate", startDate.toString())
                         .param("productId", productId.toString())
@@ -70,7 +68,15 @@ public class PriceControllerTest {
                 .andExpect(jsonPath("$[1].startDate").value(price2.getStartDate().toString()))
                 .andExpect(jsonPath("$[1].price").value(price2.getPrice()));
 
-        // Agrega una afirmación de ejemplo usando JUnit Jupiter Assertions
         assertTrue(true);
+        assertEquals(5, mockPrices.size(), "The size of the mockPrices list should be 5");
+    }
+
+    private static List<Price> getPrices(DateTimeFormatter formatter, Price price1, Price price2) {
+        Price price3 = new Price(1L, 1L, LocalDate.parse("2020-06-14-21.00.00", formatter), LocalDate.parse("2020-12-31-23.59.59", formatter), 1L, 35455L, 0, 35.50, "EUR");
+        Price price4 = new Price(2L, 1L, LocalDate.parse("2020-06-15-10.00.00", formatter), LocalDate.parse("2020-12-31-23.59.59", formatter), 2L, 35455L, 1, 25.45, "EUR");
+        Price price5 = new Price(2L, 1L, LocalDate.parse("2020-06-16-21.00.00", formatter), LocalDate.parse("2020-12-31-23.59.59", formatter), 2L, 35455L, 1, 25.45, "EUR");
+        List<Price> mockPrices = Arrays.asList(price1, price2,price3,price4,price5);
+        return mockPrices;
     }
 }
