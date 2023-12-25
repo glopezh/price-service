@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.application.PriceService;
 import com.example.domain.Price;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +22,12 @@ public class PriceController {
         this.priceService = priceService;
     }
 
-    @GetMapping("/api/prices")
+    @GetMapping("/getPrices")
     public List<Price> findPrices(
-            @RequestParam("startDate") LocalDate startDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate startDate,
             @RequestParam("productId") Long productId,
             @RequestParam("brandId") Long brandId) {
-        return priceService.findPrices(startDate, productId, brandId);
+        return priceService.findPrices(startDate, brandId, productId);
     }
 
     @GetMapping("/all")
