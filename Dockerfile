@@ -18,7 +18,7 @@ COPY src ./src
 RUN mvn clean package install
 
 # Fase de ejecución: utiliza una imagen de OpenJDK para ejecutar la aplicación
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:11-jre-jammy
 
 # Configura el directorio de trabajo
 WORKDIR /app
