@@ -1,11 +1,17 @@
 package com.example.domain;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Price {
 
@@ -18,7 +24,7 @@ public class Price {
     private Long priceList;
     private Long productId;
     private Integer priority;
-    private Double price;
+    private Double priceProduct;
     private String currency;
 
 }

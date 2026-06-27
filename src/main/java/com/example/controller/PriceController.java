@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.application.PriceService;
 import com.example.domain.Price;
+import com.example.dto.PriceFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,12 @@ public class PriceController {
 
     @GetMapping("/getPrices")
     public List<Map<String, Object>> findPrices(
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate startDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam("productId") Long productId,
             @RequestParam("brandId") Long brandId) {
-        List<Price> ListPrices = priceService.findPrices(startDate, productId, brandId);
+        
+        PriceFilterDTO filter = new PriceFilterDTO(startDate, productId, brandId);
+        List<Price> ListPrices = priceService.findPrices(filter);
 
         if (startDate == null || startDate.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("La fecha de inicio no es válida");
@@ -41,12 +44,12 @@ public class PriceController {
 
         for (Price price : ListPrices) {
             Map<String, Object> priceInfo = new HashMap<>();
-            priceInfo.put("productId",price.getProductId());
-            priceInfo.put("brandId",price.getBrandId());
-            priceInfo.put("priceList",price.getPriceList());
-            priceInfo.put("endDate",price.getEndDate());
+            priceInfo.put("productId", price.getProductId());
+            priceInfo.put("brandId", price.getBrandId());
+            priceInfo.put("priceList", price.getPriceList());
+            priceInfo.put("endDate", price.getEndDate());
             priceInfo.put("startDate", price.getStartDate());
-            priceInfo.put("price", price.getPrice());
+            priceInfo.put("priceProduct", price.getPriceProduct());
             result.add(priceInfo);
         }
         return result;
