@@ -1,7 +1,7 @@
 package com.example.application;
 
 import com.example.domain.Price;
-import com.example.dto.PriceFilterDTO;
+import com.example.domain.dto.PriceFilterDTO;
 import com.example.infraestructure.PriceRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +26,10 @@ public class PriceService {
 
     public List<Price> getAllPrices() {
         return priceRepository.findAll();
+    }
+
+    public Price createPrice(Price price) {
+        return priceRepository.save(price);
     }
 
 }

@@ -2,14 +2,12 @@ package com.example.controller;
 
 import com.example.application.PriceService;
 import com.example.domain.Price;
-import com.example.dto.PriceFilterDTO;
+import com.example.domain.dto.PriceFilterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,6 +58,24 @@ public class PriceController {
         List<Price> allPrices = priceService.getAllPrices();
 
         return new ResponseEntity<>(allPrices, HttpStatus.OK);
+    }
+
+    @PostMapping("/createPrice")
+    public ResponseEntity<Map<String, Object>> createPrice(@RequestBody Price price) {
+        Price createdPrice = priceService.createPrice(price);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", createdPrice.getId());
+        response.put("productId", createdPrice.getProductId());
+        response.put("brandId", createdPrice.getBrandId());
+        response.put("priceList", createdPrice.getPriceList());
+        response.put("endDate", createdPrice.getEndDate());
+        response.put("startDate", createdPrice.getStartDate());
+        response.put("priceProduct", createdPrice.getPriceProduct());
+        response.put("priority", createdPrice.getPriority());
+        response.put("currency", createdPrice.getCurrency());
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
 
